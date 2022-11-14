@@ -1,24 +1,34 @@
 from database_app.database_controller import DatabaseController
-from database_app.table_specification import Table
+
+
+def new():
+    new_database = DatabaseController(
+        database_name,
+        table_name,
+        table_structure,
+    )
+    new_database.create_database_and_table()
+    return new_database
+
+
+def remove(database):
+    database.drop_table(table_name)
 
 
 database_name = 'simple_iatf_database.db'
-table_name = 'sss'
+table_name = 'rrr'
 table_structure = {
     'process_number': 'text',
     'process_responsible': 'integer',
 }
 
-#
-# new_database = DatabaseController(database_name, table_name)
-# new_database.create_database_and_table()
-#
-# # new_database.drop_table(table_name)
 
-dd = {
-    'process_number': 'text',
-    'process_responsible': 'integer',
-}
+# new_database = DatabaseController(
+#     database_name,
+#     table_name,
+#     table_structure,
+#     )
+database = new()
+remove(database)
 
-table = Table(dd)
-print(table.column_names_and_types)
+# new_database.drop_table(table_name)
