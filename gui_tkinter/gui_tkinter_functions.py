@@ -10,9 +10,10 @@ def create_main_window(root, geometry):
     # y = int(root.winfo_screenheight() * 0.2)    # top edge starts from 20% of screen height
     # root.geometry('500x600+' + str(x) + '+' + str(y))
 
+    # ToDo: opravi snimkata
     root.geometry(geometry)
-    icon = PhotoImage(file='../staticfiles/iatf_logo.png')  # convert image
-    root.iconphoto(True, icon)  # change icon image
+    # icon = PhotoImage(file='../staticfiles/iatf_logo.png')  # convert image
+    # root.iconphoto(True, icon)  # change icon image
 
 
 def create_frames(root, color):
@@ -42,10 +43,39 @@ def create_frames(root, color):
 
     frame4 = Frame(
         root,
-        bg=color,
+        bg='#f2eecb',
         bd=2,
         relief='ridge'
     )
     frame4.place(x=305, y=305, width=300, height=300)
 
     return frame1, frame2, frame3, frame4
+
+
+def create_a_label(root, name):
+    label1 = Label(
+        root,
+        text=name,
+        width=11,
+        height=2,
+        bg='white',
+        borderwidth=0,
+        relief="ridge",
+    )
+    return label1
+
+
+def create_a_button(root, name, command):
+    button1 = Button(
+        root,
+        text=name,
+        width=10,
+        height=2,
+        command=command,
+    )
+    return button1
+
+
+def create_an_entry(root):
+    entry1 = Entry(root, width=10, bd=2)
+    return entry1
