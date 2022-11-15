@@ -7,10 +7,23 @@ database_name_definition = 'simple_iatf_database.db'
 #         'process_number': 'text',
 #         'process_responsible': 'integer',
 #     }
+# table_structure_definition = {
+#     'process_number': 'integer',
+#     'process_name': 'text',
+#     'step_number': 'integer',
+#     'step_name': 'text',
+#     'step_text': 'text',
+#     'step_responsible': 'text',
+#     'step_evidence': 'text',
+#     'from_process': 'text',
+#     'input_element': 'text',
+#     'to_process': 'text',
+#     'output_element': 'text',
+#     }
 table_structure_definition = {
-    'process_number': 'integer',
-    'process_name': 'text',
-    'step_number': 'integer',
+    'process': 'text',
+    'subprocess': 'text',
+    'step_number': 'text',
     'step_name': 'text',
     'step_text': 'text',
     'step_responsible': 'text',
@@ -38,7 +51,7 @@ def main():
         result = new_database.drop_table(table_name)
         return result
 
-    def f4_open_path(table_name):
+    def f4_open_excel(table_name):
         file_path = new_database.load_from_excel(table_name)
         return file_path
 
@@ -46,13 +59,18 @@ def main():
         result = new_database.empty_table(table_name)
         return result
 
+    def f6_display_processes(table_name):
+        result = new_database.display_processes(table_name)
+        return result
+
     new_database = DatabaseController(database_name)
     new_gui = GuiTkinterController(
         f1_print,
         f2_create,
         f3_drop,
-        f4_open_path,
-        f5_empty_table
+        f4_open_excel,
+        f5_empty_table,
+        f6_display_processes,
     )
     new_gui.mainloop()
 

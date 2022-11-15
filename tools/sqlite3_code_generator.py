@@ -38,7 +38,6 @@ drop_table = f"DROP TABLE "
 #               }
 
 def insert_single_row(table_name, values):
-
     to_be_inserted = values
     for i in range(len(to_be_inserted)):
         if to_be_inserted[i] is None:
@@ -54,7 +53,14 @@ def insert_single_row(table_name, values):
 # ---------------------------------------------------------#
 
 def empty_table(table_name):
-
-    print(f"DELETE FROM {table_name}")
     empty = f"DELETE FROM {table_name}"
     return empty
+
+
+# Get process list
+# ---------------------------------------------------------#
+
+def get_process_list(table_name):
+    # command = f"SELECT process FROM {table_name} WHERE step_number = '1'"
+    command = f"SELECT DISTINCT process FROM {table_name}"
+    return command

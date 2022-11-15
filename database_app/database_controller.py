@@ -1,13 +1,18 @@
 import sqlite3
+
+from process_app import process_code_generator
 from tools import sqlite3_code_generator
 from tkinter import filedialog
-import openpyxl
-from openpyxl import Workbook, load_workbook
+from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
-from openpyxl.styles import Font
 
 
 class DatabaseController:
+    START_ROW = 16
+    END_ROW = 298
+    START_COLUMN = 3
+    END_COLUMN = 14
+
     def __init__(self, database_name):
         self.database_name = database_name
 
@@ -50,9 +55,9 @@ class DatabaseController:
         # ToDo: not an excel file exception
         workbook = load_workbook(current_file_path)
         worksheet = workbook[workbook.sheetnames[0]]
-        for row in range(16, 30):  # 1 is first row, not 0
+        for row in range(self.START_ROW, self.END_ROW):  # 1 is first row, not 0
             current_row = []
-            for col in range(1, 12):  # 1 is first col, not 0 // 2, 3 e za 1 kolona samo
+            for col in range(self.START_COLUMN, self.END_COLUMN):  # 1 is first col, not 0 // 2, 3 e za 1 kolona samo
                 char = get_column_letter(col)  # == chr(65 + col)
                 current_row.append(worksheet[char + str(row)].value)
 
@@ -66,7 +71,6 @@ class DatabaseController:
         return text
 
     def empty_table(self, table_name):
-
         empty_table_sqlite3_code = sqlite3_code_generator.empty_table(table_name)
         conn, c = self._open_db_connection(self.database_name)
         c.execute(empty_table_sqlite3_code)
@@ -75,3 +79,13 @@ class DatabaseController:
         text = f"emptied {table_name}"
         print(text)
         return text
+
+    def display_processes(self, table_name):
+        fetch_info_sqlite3_code = sqlite3_code_generator.get_process_list(table_name)
+        conn, c = self._open_db_connection(self.database_name)
+        c.execute(fetch_info_sqlite3_code)
+        info = c.fetchall()
+        self._commit_and_close_db_connection(conn)
+
+        print(f"Retrieved:\n {info}")
+        return info
