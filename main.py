@@ -42,12 +42,17 @@ def main():
         file_path = new_database.load_from_excel(table_name)
         return file_path
 
+    def f5_empty_table(table_name):
+        result = new_database.empty_table(table_name)
+        return result
+
     new_database = DatabaseController(database_name)
     new_gui = GuiTkinterController(
         f1_print,
         f2_create,
         f3_drop,
         f4_open_path,
+        f5_empty_table
     )
     new_gui.mainloop()
 

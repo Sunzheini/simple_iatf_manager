@@ -7,11 +7,17 @@ class GuiTkinterController:
     MAIN_COLOR = '#7698cb'
     MAIN_GEOMETRY = '610x610'
 
-    def __init__(self, f1_print, f2_create_table, f3_drop_table, f4_open_excel_file_path):
+    def __init__(self,
+                 f1_print,
+                 f2_create_table,
+                 f3_drop_table,
+                 f4_open_excel_file_path,
+                 f5_empty_table):
         self.function1 = f1_print
         self.function2 = f2_create_table
         self.function3 = f3_drop_table
         self.function4 = f4_open_excel_file_path
+        self.function5 = f5_empty_table
 
         self.root = Tk()
         create_main_window(self.root, self.MAIN_GEOMETRY)
@@ -34,6 +40,9 @@ class GuiTkinterController:
         self.entry4 = create_an_entry(self.f1)
         self.entry4.grid(row=4, column=0)
 
+        self.entry5 = create_an_entry(self.f1)
+        self.entry5.grid(row=5, column=0)
+
         # f1_print
         self.button1 = create_a_button(self.f1, 'print', self.get1)
         self.button1.grid(sticky="W", row=1, column=1)
@@ -53,6 +62,11 @@ class GuiTkinterController:
         self.button4 = create_a_button(self.f1, 'load excel', self.get4)
         self.button4.grid(sticky="W", row=4, column=1)
         self.button4.config(bg='light grey')
+
+        # f5_empty_table
+        self.button5 = create_a_button(self.f1, 'empty table', self.get5)
+        self.button5.grid(sticky="W", row=5, column=1)
+        self.button5.config(bg='light grey')
 
     def printer_function(self, query):
         query_label = create_a_label(self.f4, query)
@@ -77,6 +91,11 @@ class GuiTkinterController:
     def get4(self):
         query = self.function4(self.entry4.get())
         self.entry4.delete(0, END)
+        self.printer_function(query)
+
+    def get5(self):
+        query = self.function5(self.entry5.get())
+        self.entry5.delete(0, END)
         self.printer_function(query)
 
     def mainloop(self):

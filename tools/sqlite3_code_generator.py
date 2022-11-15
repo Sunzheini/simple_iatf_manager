@@ -50,4 +50,11 @@ def insert_single_row(table_name, values):
     return insert_into_table
 
 
+# Empty table
 # ---------------------------------------------------------#
+
+def empty_table(table_name):
+
+    print(f"DELETE FROM {table_name}")
+    empty = f"DELETE FROM {table_name}"
+    return empty

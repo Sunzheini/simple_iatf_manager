@@ -31,9 +31,6 @@ class DatabaseController:
         print(f"table {table_name} created")
         return f"table {table_name} created"
 
-    def empty_table(self):
-        pass
-
     def drop_table(self, table_name):
         drop_table_sqlite3_code = sqlite3_code_generator.drop_table
         conn, c = self._open_db_connection(self.database_name)
@@ -65,5 +62,16 @@ class DatabaseController:
             self._commit_and_close_db_connection(conn)
 
         text = f"Loaded from: {current_file_path}"
+        print(text)
+        return text
+
+    def empty_table(self, table_name):
+
+        empty_table_sqlite3_code = sqlite3_code_generator.empty_table(table_name)
+        conn, c = self._open_db_connection(self.database_name)
+        c.execute(empty_table_sqlite3_code)
+        self._commit_and_close_db_connection(conn)
+
+        text = f"emptied {table_name}"
         print(text)
         return text
