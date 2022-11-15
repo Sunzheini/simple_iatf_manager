@@ -4,59 +4,80 @@ from gui_tkinter.gui_tkinter_functions import create_main_window, create_frames,
 
 
 class GuiTkinterController:
+    MAIN_COLOR = '#7698cb'
+    MAIN_GEOMETRY = '610x610'
 
-    @staticmethod
-    def start(function1, function2, function3):
-        def printer_function(query):
-            query_label = create_a_label(f4, query)
-            query_label.config(width=30, height=5)
-            query_label.place(x=0, y=0)
+    def __init__(self, f1_print, f2_create_table, f3_drop_table, f4_open_excel_file_path):
+        self.function1 = f1_print
+        self.function2 = f2_create_table
+        self.function3 = f3_drop_table
+        self.function4 = f4_open_excel_file_path
 
-        def get1():
-            query = function1(entry1.get())
-            entry1.delete(0, END)
-            printer_function(query)
+        self.root = Tk()
+        create_main_window(self.root, self.MAIN_GEOMETRY)
 
-        def get2():
-            query = function2(entry2.get())
-            entry2.delete(0, END)
-            printer_function(query)
+        self.f1, self.f2, self.f3, self.f4 = create_frames(self.root, self.MAIN_COLOR)
+        self.f1.config(bg='white')
 
-        def get3():
-            query = function3(entry3.get())
-            entry3.delete(0, END)
-            printer_function(query)
+        self.label1 = create_a_label(self.f1, "db control")
+        self.label1.grid(row=0, column=0, columnspan=2)
 
-        color = '#7698cb'
-        geometry = '610x610'
-        root = Tk()
-        create_main_window(root, geometry)
+        self.entry1 = Entry(self.f1, width=20)
+        self.entry1.grid(row=1, column=0)
 
-        f1, f2, f3, f4 = create_frames(root, color)
-        f1.config(bg='white')
+        self.entry2 = create_an_entry(self.f1)
+        self.entry2.grid(row=2, column=0)
 
-        label1 = create_a_label(f1, "db control")
-        label1.grid(row=0, column=0, columnspan=2)
+        self.entry3 = create_an_entry(self.f1)
+        self.entry3.grid(row=3, column=0)
 
-        entry1 = Entry(f1, width=20)
-        entry1.grid(row=1, column=0)
+        self.entry4 = create_an_entry(self.f1)
+        self.entry4.grid(row=4, column=0)
 
-        entry2 = create_an_entry(f1)
-        entry2.grid(row=2, column=0)
+        # f1_print
+        self.button1 = create_a_button(self.f1, 'print', self.get1)
+        self.button1.grid(sticky="W", row=1, column=1)
+        self.button1.config(bg='light grey')
 
-        entry3 = create_an_entry(f1)
-        entry3.grid(row=3, column=0)
+        # f2_create_table
+        self.button2 = create_a_button(self.f1, 'create table', self.get2)
+        self.button2.grid(sticky="W", row=2, column=1)
+        self.button2.config(bg='light grey')
 
-        button1 = create_a_button(f1, 'print', get1)
-        button1.grid(sticky="W", row=1, column=1)
-        button1.config(bg='light grey')
+        # f3_drop_table
+        self.button3 = create_a_button(self.f1, 'delete table', self.get3)
+        self.button3.grid(sticky="W", row=3, column=1)
+        self.button3.config(bg='light grey')
 
-        button2 = create_a_button(f1, 'create table', get2)
-        button2.grid(sticky="W", row=2, column=1)
-        button2.config(bg='light grey')
+        # f4_open_excel_file_path
+        self.button4 = create_a_button(self.f1, 'load excel', self.get4)
+        self.button4.grid(sticky="W", row=4, column=1)
+        self.button4.config(bg='light grey')
 
-        button3 = create_a_button(f1, 'delete table', get3)
-        button3.grid(sticky="W", row=3, column=1)
-        button3.config(bg='light grey')
+    def printer_function(self, query):
+        query_label = create_a_label(self.f4, query)
+        query_label.config(width=42, height=5, bg='white')
+        query_label.place(x=0, y=0)
 
-        root.mainloop()
+    def get1(self):
+        query = self.function1(self.entry1.get())
+        self.entry1.delete(0, END)
+        self.printer_function(query)
+
+    def get2(self):
+        query = self.function2(self.entry2.get())
+        self.entry2.delete(0, END)
+        self.printer_function(query)
+
+    def get3(self):
+        query = self.function3(self.entry3.get())
+        self.entry3.delete(0, END)
+        self.printer_function(query)
+
+    def get4(self):
+        query = self.function4(self.entry4.get())
+        self.entry4.delete(0, END)
+        self.printer_function(query)
+
+    def mainloop(self):
+        self.root.mainloop()

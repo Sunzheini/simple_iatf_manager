@@ -10,10 +10,9 @@ def create_main_window(root, geometry):
     # y = int(root.winfo_screenheight() * 0.2)    # top edge starts from 20% of screen height
     # root.geometry('500x600+' + str(x) + '+' + str(y))
 
-    # ToDo: opravi snimkata
     root.geometry(geometry)
-    # icon = PhotoImage(file='../staticfiles/iatf_logo.png')  # convert image
-    # root.iconphoto(True, icon)  # change icon image
+    icon = PhotoImage(file='staticfiles/iatf_logo.png')  # convert image
+    root.iconphoto(True, icon)  # change icon image
 
 
 def create_frames(root, color):
