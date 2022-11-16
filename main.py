@@ -1,25 +1,9 @@
-from database_app.database_controller import DatabaseController
+from database_app.db_controller import DatabaseController
 from gui_tkinter.gui_tkinter_controller import GuiTkinterController
 
 
 database_name_definition = 'simple_iatf_database.db'
-# table_structure_definition = {
-#         'process_number': 'text',
-#         'process_responsible': 'integer',
-#     }
-# table_structure_definition = {
-#     'process_number': 'integer',
-#     'process_name': 'text',
-#     'step_number': 'integer',
-#     'step_name': 'text',
-#     'step_text': 'text',
-#     'step_responsible': 'text',
-#     'step_evidence': 'text',
-#     'from_process': 'text',
-#     'input_element': 'text',
-#     'to_process': 'text',
-#     'output_element': 'text',
-#     }
+
 table_structure_definition = {
     'process': 'text',
     'subprocess': 'text',
@@ -63,6 +47,22 @@ def main():
         result = new_database.display_processes(table_name)
         return result
 
+    def f7_get_spec_info(
+            table_name,
+            is_distinct,
+            target_column_name,
+            condition_column_name,
+            condition_column_value
+    ):
+        result = new_database.get_specific_process_info(
+            table_name,
+            is_distinct,
+            target_column_name,
+            condition_column_name,
+            condition_column_value
+        )
+        return result
+
     new_database = DatabaseController(database_name)
     new_gui = GuiTkinterController(
         f1_print,
@@ -71,6 +71,7 @@ def main():
         f4_open_excel,
         f5_empty_table,
         f6_display_processes,
+        f7_get_spec_info,
     )
     new_gui.mainloop()
 

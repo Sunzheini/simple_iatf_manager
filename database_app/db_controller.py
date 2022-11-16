@@ -1,6 +1,4 @@
 import sqlite3
-
-from process_app import process_code_generator
 from tools import sqlite3_code_generator
 from tkinter import filedialog
 from openpyxl import load_workbook
@@ -8,7 +6,8 @@ from openpyxl.utils import get_column_letter
 
 
 class DatabaseController:
-    START_ROW = 16
+    # START_ROW = 16
+    START_ROW = 4
     END_ROW = 298
     START_COLUMN = 3
     END_COLUMN = 14
@@ -52,7 +51,7 @@ class DatabaseController:
     def load_from_excel(self, table_name):
         current_file_path = filedialog.askopenfilename()  # returns a string where the file is located
 
-        # ToDo: not an excel file exception
+        # ToDo: make a not an excel file exception
         workbook = load_workbook(current_file_path)
         worksheet = workbook[workbook.sheetnames[0]]
         for row in range(self.START_ROW, self.END_ROW):  # 1 is first row, not 0
@@ -82,6 +81,31 @@ class DatabaseController:
 
     def display_processes(self, table_name):
         fetch_info_sqlite3_code = sqlite3_code_generator.get_process_list(table_name)
+        conn, c = self._open_db_connection(self.database_name)
+        c.execute(fetch_info_sqlite3_code)
+        info = c.fetchall()
+        self._commit_and_close_db_connection(conn)
+
+        print(f"Retrieved:\n {info}")
+        return info
+
+    def get_specific_process_info(
+            self,
+            table_name,
+            is_distinct,
+            target_column_name,
+            condition_column_name,
+            condition_column_value
+    ):
+
+        fetch_info_sqlite3_code = sqlite3_code_generator.fetch_specific_info(
+            table_name,
+            is_distinct,
+            target_column_name,
+            condition_column_name,
+            condition_column_value
+        )
+
         conn, c = self._open_db_connection(self.database_name)
         c.execute(fetch_info_sqlite3_code)
         info = c.fetchall()

@@ -1,7 +1,7 @@
 import random
 from tkinter import *
 from gui_tkinter.gui_tkinter_functions import create_main_window, create_frames, create_a_label, create_a_button, \
-    create_an_entry
+    create_an_entry, create_new_window
 from process_app import process_code_generator
 
 
@@ -15,15 +15,21 @@ class GuiTkinterController:
                  f3_drop_table,
                  f4_open_excel_file_path,
                  f5_empty_table,
-                 f6_display_processes):
+                 f6_display_processes,
+                 f7_get_spec_info):
 
+        # functions received from main.py
+        # ------------------------------------------------------------------------------------
         self.function1 = f1_print
         self.function2 = f2_create_table
         self.function3 = f3_drop_table
         self.function4 = f4_open_excel_file_path
         self.function5 = f5_empty_table
         self.function6 = f6_display_processes
+        self.function7 = f7_get_spec_info
 
+        # root window
+        # ------------------------------------------------------------------------------------
         self.root = Tk()
         create_main_window(self.root, self.MAIN_GEOMETRY)
 
@@ -31,8 +37,33 @@ class GuiTkinterController:
         self.f1.config(bg='white')
         self.f3.config(bg='white')
 
-# db control layout
-# ------------------------------------------------------------------------------------
+        # process window (window2)
+        # ------------------------------------------------------------------------------------
+        self.process_window = None
+        self.process_window_f1 = None
+        self.process_window_f2 = None
+        self.process_window_f3 = None
+        self.process_window_f4 = None
+        self.process_window_f5 = None
+        self.process_window_f6 = None
+        self.process_window_f7 = None
+        self.process_window_f8 = None
+        self.process_window_f9 = None
+
+        self.process_window_l1 = None
+        self.process_window_l2 = None
+        self.process_window_l3 = None
+        self.process_window_l4 = None
+        self.process_window_l5 = None
+
+        self.process_window_e1 = None
+        self.process_window_e2 = None
+        self.process_window_e3 = None
+        self.process_window_e4 = None
+        self.process_window_e5 = None
+
+        # db control layout
+        # ------------------------------------------------------------------------------------
         self.label_f1 = create_a_label(self.f1, "db control")
         self.label_f1.grid(row=0, column=0, columnspan=2)
 
@@ -76,8 +107,8 @@ class GuiTkinterController:
         self.button5_f1.grid(sticky="W", row=5, column=1)
         self.button5_f1.config(bg='light grey')
 
-# process control layout
-# ------------------------------------------------------------------------------------
+        # process control layout
+        # ------------------------------------------------------------------------------------
 
         self.label1_f2 = create_a_label(self.f3, "process control")
         self.label1_f2.grid(row=0, column=0, columnspan=2)
@@ -90,8 +121,8 @@ class GuiTkinterController:
         self.button1_f2.grid(sticky="W", row=1, column=1)
         self.button1_f2.config(bg='light grey')
 
-# db control methods
-# ------------------------------------------------------------------------------------
+    # db control methods
+    # ------------------------------------------------------------------------------------
 
     def test_func(self):
         result = random.randint(1, 100)
@@ -129,26 +160,91 @@ class GuiTkinterController:
         self.entry5_f1.delete(0, END)
         self.printer_function(query)
 
-# process control methods
-# ------------------------------------------------------------------------------------
+    # process control methods
+    # ------------------------------------------------------------------------------------
 
     def get6(self):
-        query = self.function6(self.entry1_f2.get())
+
+        # ToDo: hardcoded for development
+        command = 'processes'
+        # query = self.function6(self.entry1_f2.get())
+        query = self.function6(command)
         self.entry1_f2.delete(0, END)
         self.printer_function(query)
 
         result = process_code_generator.display_processes_formatter(query)
 
+        current_column = 0
         for idx in range(len(result)):
             current_button = create_a_button(self.f2, result[idx], self.process_menu)
-            current_button.config(width=35, height=1, bg='light grey', anchor=W)
-            current_button.pack()
+            current_button.config(width=20, height=1, bg='light grey', anchor=W)
+            # current_button.pack()
+            current_row = idx
+            if idx >= 10:
+                current_row -= 10
+                current_column = 1
+            current_button.grid(row=current_row, column=current_column)
 
     def process_menu(self):
-        new_window2 = Toplevel()
+        self.process_window, \
+            self.process_window_f1, \
+            self.process_window_f2, \
+            self.process_window_f3, \
+            self.process_window_f4, \
+            self.process_window_f5, \
+            self.process_window_f6, \
+            self.process_window_f7, \
+            self.process_window_f8, \
+            self.process_window_f9 = create_new_window()
 
-        # ToDo: continue here - what to take from db and to display
+        self.process_window_l1 = create_a_label(self.process_window_f2, "table_name")
+        self.process_window_l1.config(width=17)
+        self.process_window_l1.grid(row=0, column=0)
+        self.process_window_l2 = create_a_label(self.process_window_f2, "is_distinct")
+        self.process_window_l2.config(width=17)
+        self.process_window_l2.grid(row=1, column=0)
+        self.process_window_l3 = create_a_label(self.process_window_f2, "target_column_name")
+        self.process_window_l3.config(width=17)
+        self.process_window_l3.grid(row=2, column=0)
+        self.process_window_l4 = create_a_label(self.process_window_f2, "condition_column_name")
+        self.process_window_l4.config(width=17)
+        self.process_window_l4.grid(row=3, column=0)
+        self.process_window_l5 = create_a_label(self.process_window_f2, "condition_column_value")
+        self.process_window_l5.config(width=17)
+        self.process_window_l5.grid(row=4, column=0)
 
-# ------------------------------------------------------------------------------------
+        self.process_window_e1 = Entry(self.process_window_f2, width=15)
+        self.process_window_e1.grid(row=0, column=1)
+        self.process_window_e2 = Entry(self.process_window_f2, width=15)
+        self.process_window_e2.grid(row=1, column=1)
+        self.process_window_e3 = Entry(self.process_window_f2, width=15)
+        self.process_window_e3.grid(row=2, column=1)
+        self.process_window_e4 = Entry(self.process_window_f2, width=15)
+        self.process_window_e4.grid(row=3, column=1)
+        self.process_window_e5 = Entry(self.process_window_f2, width=15)
+        self.process_window_e5.grid(row=4, column=1)
+
+        info_button1 = create_a_button(self.process_window_f2, 'get specific info', self.get7)
+        info_button1.grid(sticky="W", row=0, column=2)
+        info_button1.config(bg='light grey')
+
+    def get7(self):
+        query = self.function7(
+            self.process_window_e1.get(),
+            self.process_window_e2.get(),
+            self.process_window_e3.get(),
+            self.process_window_e4.get(),
+            self.process_window_e5.get()
+        )
+        self.printer_function(query)
+
+        result = process_code_generator.specific_results_formatter(query)
+
+        query_label = create_a_label(self.process_window_f5, result)
+        query_label.config(width=42, height=20, bg='yellow')
+        query_label.place(x=0, y=0)
+        query_label.place(x=0, y=0)
+
+    # ------------------------------------------------------------------------------------
     def mainloop(self):
         self.root.mainloop()

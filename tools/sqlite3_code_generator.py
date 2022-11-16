@@ -64,3 +64,22 @@ def get_process_list(table_name):
     # command = f"SELECT process FROM {table_name} WHERE step_number = '1'"
     command = f"SELECT DISTINCT process FROM {table_name}"
     return command
+
+
+# Get specific info
+# ---------------------------------------------------------#
+
+def fetch_specific_info(
+        table_name,
+        is_distinct,
+        target_column_name,
+        condition_column_name,
+        condition_column_value):
+    command = ''
+    if is_distinct:
+        command = f"SELECT DISTINCT {target_column_name} FROM {table_name} WHERE {condition_column_name} = '{condition_column_value}'"
+        print(command)
+    else:
+        command = f"SELECT {target_column_name} FROM {table_name} WHERE {condition_column_name} = '{condition_column_value}'"
+        print(command)
+    return command

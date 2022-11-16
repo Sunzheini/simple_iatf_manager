@@ -78,3 +78,39 @@ def create_a_button(root, name, command):
 def create_an_entry(root):
     entry1 = Entry(root, width=10, bd=2)
     return entry1
+
+
+def create_new_window():
+    new_window = Toplevel()
+    new_window.geometry('910x810')
+    new_window.config(bg='#7698cb')
+    frame_color = '#f2eecb'
+
+    f1 = Frame(new_window, bg=frame_color, bd=2, relief='ridge')
+    f1.place(x=5, y=5, width=300, height=200)
+
+    f2 = Frame(new_window, bg=frame_color, bd=2, relief='ridge')
+    f2.place(x=305, y=5, width=300, height=200)
+
+    f3 = Frame(new_window, bg=frame_color, bd=2, relief='ridge')
+    f3.place(x=605, y=5, width=300, height=200)
+
+    f4 = Frame(new_window, bg=frame_color, bd=2, relief='ridge')
+    f4.place(x=5, y=205, width=300, height=400)
+
+    f5 = Frame(new_window, bg=frame_color, bd=2, relief='ridge')
+    f5.place(x=305, y=205, width=300, height=400)
+
+    f6 = Frame(new_window, bg=frame_color, bd=2, relief='ridge')
+    f6.place(x=605, y=205, width=300, height=400)
+
+    f7 = Frame(new_window, bg=frame_color, bd=2, relief='ridge')
+    f7.place(x=5, y=605, width=300, height=200)
+
+    f8 = Frame(new_window, bg=frame_color, bd=2, relief='ridge')
+    f8.place(x=305, y=605, width=300, height=200)
+
+    f9 = Frame(new_window, bg=frame_color, bd=2, relief='ridge')
+    f9.place(x=605, y=605, width=300, height=200)
+
+    return new_window, f1, f2, f3, f4, f5, f6, f7, f8, f9
