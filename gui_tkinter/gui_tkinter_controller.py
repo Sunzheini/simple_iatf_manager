@@ -62,6 +62,12 @@ class GuiTkinterController:
         self.process_window_e4 = None
         self.process_window_e5 = None
 
+        self.var1 = None
+        self.var2 = None
+        self.var3 = None
+        self.var4 = None
+        self.var5 = None
+
         # db control layout
         # ------------------------------------------------------------------------------------
         self.label_f1 = create_a_label(self.f1, "db control")
@@ -213,6 +219,61 @@ class GuiTkinterController:
         self.process_window_l5.config(width=17)
         self.process_window_l5.grid(row=4, column=0)
 
+# ToDo: optimise code
+
+
+        # Drop down menus
+        options1 = ['processes', 'processes2', 'processes3']
+        options2 = [True, False]
+        options3 = ['process',
+                    'subprocess',
+                    'step_number',
+                    'step_name',
+                    'step_text',
+                    'step_responsible',
+                    'step_evidence',
+                    'from_process',
+                    'input_element',
+                    'to_process',
+                    'output_element']
+        options4 = ['process',
+                    'subprocess',
+                    'step_number',
+                    'step_name',
+                    'step_text',
+                    'step_responsible',
+                    'step_evidence',
+                    'from_process',
+                    'input_element',
+                    'to_process',
+                    'output_element']
+        options5 = ['1', '2', '3']
+
+        self.var1 = StringVar(self.process_window_f1)
+        self.var1.set(options1[0])
+        dd = OptionMenu(self.process_window_f1, self.var1, *options1)
+        dd.pack()
+
+        self.var2 = StringVar(self.process_window_f1)
+        self.var2.set(options2[0])
+        dd = OptionMenu(self.process_window_f1, self.var2, *options2)
+        dd.pack()
+
+        self.var3 = StringVar(self.process_window_f1)
+        self.var3.set(options3[0])
+        dd = OptionMenu(self.process_window_f1, self.var3, *options3)
+        dd.pack()
+
+        self.var4 = StringVar(self.process_window_f1)
+        self.var4.set(options4[0])
+        dd = OptionMenu(self.process_window_f1, self.var4, *options4)
+        dd.pack()
+
+        self.var5 = StringVar(self.process_window_f1)
+        self.var5.set(options5[0])
+        dd = OptionMenu(self.process_window_f1, self.var5, *options5)
+        dd.pack()
+
         self.process_window_e1 = Entry(self.process_window_f2, width=15)
         self.process_window_e1.grid(row=0, column=1)
         self.process_window_e2 = Entry(self.process_window_f2, width=15)
@@ -230,11 +291,19 @@ class GuiTkinterController:
 
     def get7(self):
         query = self.function7(
-            self.process_window_e1.get(),
-            self.process_window_e2.get(),
-            self.process_window_e3.get(),
-            self.process_window_e4.get(),
-            self.process_window_e5.get()
+            # hardcoded for development
+            # self.process_window_e1.get(),
+            # self.process_window_e2.get(),
+            # self.process_window_e3.get(),
+            # self.process_window_e4.get(),
+            # self.process_window_e5.get(),
+
+            self.var1.get(),
+            self.var2.get(),
+            self.var3.get(),
+            self.var4.get(),
+            self.var5.get(),
+
         )
         self.printer_function(query)
 
