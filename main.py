@@ -18,6 +18,34 @@ table_structure_definition = {
     'output_element': 'text',
     }
 
+query_requirements = {
+    'options1': ['processes', 'processes2', 'processes3'],
+    'options2': ['Yes', 'No'],
+    'options3': ['process',
+            'subprocess',
+            'step_number',
+            'step_name',
+            'step_text',
+            'step_responsible',
+            'step_evidence',
+            'from_process',
+            'input_element',
+            'to_process',
+            'output_element'],
+    'options4': ['process',
+            'subprocess',
+            'step_number',
+            'step_name',
+            'step_text',
+            'step_responsible',
+            'step_evidence',
+            'from_process',
+            'input_element',
+            'to_process',
+            'output_element'],
+    'options5': ['1', '2', '3'],
+}
+
 
 def main():
     database_name = database_name_definition
@@ -72,6 +100,7 @@ def main():
         f5_empty_table,
         f6_display_processes,
         f7_get_spec_info,
+        query_requirements,
     )
     new_gui.mainloop()
 

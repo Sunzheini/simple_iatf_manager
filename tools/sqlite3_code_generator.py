@@ -76,10 +76,10 @@ def fetch_specific_info(
         condition_column_name,
         condition_column_value):
     command = ''
-    if is_distinct:
+    if is_distinct == 'Yes':
         command = f"SELECT DISTINCT {target_column_name} FROM {table_name} WHERE {condition_column_name} = '{condition_column_value}'"
         print(command)
-    else:
+    elif is_distinct == 'No':
         command = f"SELECT {target_column_name} FROM {table_name} WHERE {condition_column_name} = '{condition_column_value}'"
         print(command)
     return command

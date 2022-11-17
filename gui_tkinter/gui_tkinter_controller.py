@@ -1,4 +1,5 @@
 import random
+from functools import wraps
 from tkinter import *
 from gui_tkinter.gui_tkinter_functions import create_main_window, create_frames, create_a_label, create_a_button, \
     create_an_entry, create_new_window
@@ -16,7 +17,8 @@ class GuiTkinterController:
                  f4_open_excel_file_path,
                  f5_empty_table,
                  f6_display_processes,
-                 f7_get_spec_info):
+                 f7_get_spec_info,
+                 query_requirements):
 
         # functions received from main.py
         # ------------------------------------------------------------------------------------
@@ -27,6 +29,8 @@ class GuiTkinterController:
         self.function5 = f5_empty_table
         self.function6 = f6_display_processes
         self.function7 = f7_get_spec_info
+
+        self.query_requirements = query_requirements
 
         # root window
         # ------------------------------------------------------------------------------------
@@ -203,6 +207,7 @@ class GuiTkinterController:
             self.process_window_f8, \
             self.process_window_f9 = create_new_window()
 
+        # labels
         self.process_window_l1 = create_a_label(self.process_window_f2, "table_name")
         self.process_window_l1.config(width=17)
         self.process_window_l1.grid(row=0, column=0)
@@ -219,96 +224,53 @@ class GuiTkinterController:
         self.process_window_l5.config(width=17)
         self.process_window_l5.grid(row=4, column=0)
 
-# ToDo: optimise code
+        options1 = self.query_requirements['options1']
+        options2 = self.query_requirements['options2']
+        options3 = self.query_requirements['options3']
+        options4 = self.query_requirements['options4']
+        options5 = self.query_requirements['options5']  # not used
 
-
-        # Drop down menus
-        options1 = ['processes', 'processes2', 'processes3']
-        options2 = [True, False]
-        options3 = ['process',
-                    'subprocess',
-                    'step_number',
-                    'step_name',
-                    'step_text',
-                    'step_responsible',
-                    'step_evidence',
-                    'from_process',
-                    'input_element',
-                    'to_process',
-                    'output_element']
-        options4 = ['process',
-                    'subprocess',
-                    'step_number',
-                    'step_name',
-                    'step_text',
-                    'step_responsible',
-                    'step_evidence',
-                    'from_process',
-                    'input_element',
-                    'to_process',
-                    'output_element']
-        options5 = ['1', '2', '3']
-
-        self.var1 = StringVar(self.process_window_f1)
+        self.var1 = StringVar(self.process_window_f2)
         self.var1.set(options1[0])
-        dd = OptionMenu(self.process_window_f1, self.var1, *options1)
-        dd.pack()
+        dd = OptionMenu(self.process_window_f2, self.var1, *options1)
+        dd.grid(row=0, column=1, sticky=W)
 
-        self.var2 = StringVar(self.process_window_f1)
+        self.var2 = StringVar(self.process_window_f2)
         self.var2.set(options2[0])
-        dd = OptionMenu(self.process_window_f1, self.var2, *options2)
-        dd.pack()
+        dd = OptionMenu(self.process_window_f2, self.var2, *options2)
+        dd.grid(row=1, column=1, sticky=W)
 
-        self.var3 = StringVar(self.process_window_f1)
+        self.var3 = StringVar(self.process_window_f2)
         self.var3.set(options3[0])
-        dd = OptionMenu(self.process_window_f1, self.var3, *options3)
-        dd.pack()
+        dd = OptionMenu(self.process_window_f2, self.var3, *options3)
+        dd.grid(row=2, column=1, sticky=W)
 
-        self.var4 = StringVar(self.process_window_f1)
+        self.var4 = StringVar(self.process_window_f2)
         self.var4.set(options4[0])
-        dd = OptionMenu(self.process_window_f1, self.var4, *options4)
-        dd.pack()
+        dd = OptionMenu(self.process_window_f2, self.var4, *options4)
+        dd.grid(row=3, column=1, sticky=W)
 
-        self.var5 = StringVar(self.process_window_f1)
-        self.var5.set(options5[0])
-        dd = OptionMenu(self.process_window_f1, self.var5, *options5)
-        dd.pack()
-
-        self.process_window_e1 = Entry(self.process_window_f2, width=15)
-        self.process_window_e1.grid(row=0, column=1)
-        self.process_window_e2 = Entry(self.process_window_f2, width=15)
-        self.process_window_e2.grid(row=1, column=1)
-        self.process_window_e3 = Entry(self.process_window_f2, width=15)
-        self.process_window_e3.grid(row=2, column=1)
-        self.process_window_e4 = Entry(self.process_window_f2, width=15)
-        self.process_window_e4.grid(row=3, column=1)
         self.process_window_e5 = Entry(self.process_window_f2, width=15)
         self.process_window_e5.grid(row=4, column=1)
 
-        info_button1 = create_a_button(self.process_window_f2, 'get specific info', self.get7)
+        # button to get the info from db
+        info_button1 = create_a_button(self.process_window_f2, 'Get info', self.get7)
         info_button1.grid(sticky="W", row=0, column=2)
         info_button1.config(bg='light grey')
 
     def get7(self):
         query = self.function7(
-            # hardcoded for development
-            # self.process_window_e1.get(),
-            # self.process_window_e2.get(),
-            # self.process_window_e3.get(),
-            # self.process_window_e4.get(),
-            # self.process_window_e5.get(),
-
             self.var1.get(),
             self.var2.get(),
             self.var3.get(),
             self.var4.get(),
-            self.var5.get(),
-
+            self.process_window_e5.get(),
         )
         self.printer_function(query)
 
         result = process_code_generator.specific_results_formatter(query)
 
+        # print in the middle of the new window
         query_label = create_a_label(self.process_window_f5, result)
         query_label.config(width=42, height=20, bg='yellow')
         query_label.place(x=0, y=0)
